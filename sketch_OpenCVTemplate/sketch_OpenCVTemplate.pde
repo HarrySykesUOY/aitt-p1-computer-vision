@@ -7,8 +7,8 @@ boolean DEBUG = false;
 OpenCV opencv;
 Capture cam;
 
-Rectangle[] faces;
-Rectangle[] noses;
+String[] instructions = {"left", "right", "up", "down"};
+int currentInstruction;
 
 void setup() 
 {
@@ -19,6 +19,8 @@ void setup()
   
   surface.setResizable(true);
   surface.setSize(opencv.width, opencv.height);
+  
+  currentInstruction = (int)random(4);
 }
 
 void draw() 
@@ -30,7 +32,10 @@ void draw()
     opencv.loadImage((PImage)cam);
     image(opencv.getInput(), 0, 0);
     
-    
+    opencv.calculateOpticalFlow();
+    PVector af = opencv.getAverageFlow();
+    println(af);
+    opencv.drawOpticalFlow();
     
   }
 }
